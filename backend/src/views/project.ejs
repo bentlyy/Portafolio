@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= proyecto.nombre %></title>
+</head>
+<body>
+  <h1><%= proyecto.nombre %></h1>
+  <p><%= proyecto.descripcion %></p>
+  <h3>Stack:</h3>
+  <ul>
+    <% proyecto.stack.forEach(tech => { %>
+      <li><%= tech %></li>
+    <% }); %>
+  </ul>
+  <% if (proyecto.url) { %>
+    <p><a href="<%= proyecto.url %>" target="_blank">Ver proyecto</a></p>
+  <% } %>
+</body>
+</html>
