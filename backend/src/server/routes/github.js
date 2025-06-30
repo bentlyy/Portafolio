@@ -1,4 +1,5 @@
 const express = require('express');
+const axios = require('axios');
 const router = express.Router();
 const { getGithubRepos } = require('../controllers/githubController');
 
@@ -7,7 +8,7 @@ router.get('/repos', getGithubRepos);
 router.get('/repos/:id', async (req, res) => {
   const id = parseInt(req.params.id);
   try {
-    const username = 'tu_usuario_github';
+    const username = 'tu_usuario_github'; // Reemplaza con tu usuario o usa .env
     const response = await axios.get(`https://api.github.com/users/${username}/repos`);
     const repo = response.data.find(r => r.id === id);
     if (!repo) return res.status(404).json({ message: 'Repositorio no encontrado' });
