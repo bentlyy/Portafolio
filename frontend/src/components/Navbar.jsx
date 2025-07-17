@@ -1,23 +1,23 @@
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom'
+import { Navbar as BootstrapNavbar, Nav, Container } from 'react-bootstrap'
 
-function Navbar() {
+const Navbar = () => {
   return (
-      <nav style={{
-    background: "#333",
-    padding: "1rem",
-    position: "sticky",
-    top: 0,
-    zIndex: 100,
-  }}>
-
-      <ul style={{ display: "flex", gap: "1rem", listStyle: "none", margin: 0 }}>
-        <li><Link to="/" style={{ color: "#fff" }}>Inicio</Link></li>
-        <li><Link to="/proyectos" style={{ color: "#fff" }}>Proyectos</Link></li>
-        <li><Link to="/sobre-mi" style={{ color: "#fff" }}>Sobre mí</Link></li>
-        <li><Link to="/contacto" style={{ color: "#fff" }}>Contacto</Link></li>
-      </ul>
-    </nav>
-  );
+    <BootstrapNavbar bg="dark" variant="dark" expand="lg">
+      <Container>
+        <BootstrapNavbar.Brand as={Link} to="/">Mi Portafolio</BootstrapNavbar.Brand>
+        <BootstrapNavbar.Toggle aria-controls="basic-navbar-nav" />
+        <BootstrapNavbar.Collapse id="basic-navbar-nav">
+          <Nav className="me-auto">
+            <Nav.Link as={Link} to="/">Inicio</Nav.Link>
+            <Nav.Link as={Link} to="/sobre-mi">Sobre Mí</Nav.Link>
+            <Nav.Link as={Link} to="/proyectos">Proyectos</Nav.Link>
+            <Nav.Link as={Link} to="/contacto">Contacto</Nav.Link>
+          </Nav>
+        </BootstrapNavbar.Collapse>
+      </Container>
+    </BootstrapNavbar>
+  )
 }
 
-export default Navbar;
+export default Navbar

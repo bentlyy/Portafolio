@@ -1,60 +1,62 @@
-function ProjectCard({ project }) {
+import React from 'react'
+import { Card, Button, Badge } from 'react-bootstrap'
+
+const ProjectCard = ({ project, isRunning, onRun, onStop }) => {
   return (
-    <div style={{
-      border: "1px solid #ccc",
-      padding: "1.5rem",
-      marginBottom: "1.5rem",
-      borderRadius: "10px",
-      backgroundColor: "black",
-      boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-      maxWidth: "600px"
-    }}>
-      {/* Título y etiqueta privado */}
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        <h3 style={{ margin: 0, fontSize: "1.4rem" }}>{project.nombre}</h3>
-        {project.private && (
-          <span style={{
-            color: "white",
-            backgroundColor: "#d9534f",
-            padding: "0.3rem 0.6rem",
-            borderRadius: "6px",
-            fontSize: "0.75rem"
-          }}>
-            🔒 Privado
-          </span>
-        )}
-      </div>
-
-      {/* Descripción */}
-      <p style={{ marginTop: "0.5rem", fontSize: "1rem", color: "#444" }}>
-        {project.descripcion || "Sin descripción"}
-      </p>
-
-      {/* Stack o lenguaje */}
-      {Array.isArray(project.stack) && project.stack.length > 0 ? (
-        <p><strong>Stack:</strong> {project.stack.join(", ")}</p>
-      ) : project.lenguaje && (
-        <p><strong>Lenguaje:</strong> {project.lenguaje}</p>
-      )}
-
-      {/* Estrellas y forks */}
-      {typeof project.stars !== 'undefined' && (
-        <p>⭐ {project.stars} | 🍴 Forks: {project.forks}</p>
-      )}
-
-      {/* Enlace */}
-      {project.url && (
-        <a
-          href={project.url}
-          target="_blank"
-          rel="noreferrer"
-          style={{ color: "#007bff", textDecoration: "none", fontWeight: "bold" }}
-        >
-          Ver en GitHub →
-        </a>
-      )}
-    </div>
-  );
+    <Card className="h-100 hover-shadow">
+      <Card.Body>
+        <Card.Title>
+          {project.name}
+          <Badge bg="primary" className="ms-2">Docker</Badge>
+        </Card.Title>
+        <Card.Subtitle className="mb-2 text-muted">
+          Puerto: <Badge bg="light" text="dark">{project.port || 'No especificado'}</Badge>
+        </Card.Subtitle>
+        
+        <div className="mt-3">
+          {isRunning ? (
+            <>
+              <Button 
+                variant="danger" 
+                size="sm"
+                onClick={() => onStop(project.name)}
+                className="me-2"
+              >
+                <span className="status-dot bg-success me-1"></span>
+                🛑 Detener
+              </Button>
+              <a 
+                href={`http://localhost:${project.port}`} 
+                target="_blank" 
+                rel="noreferrer"
+                className="btn btn-success btn-sm"
+              >
+                🌐 Abrir Proyecto
+              </a>
+            </>
+          ) : (
+            <Button 
+              variant="primary" 
+              size="sm"
+              onClick={() => onRun(project.name)}
+            >
+              <span className="status-dot bg-danger me-1"></span>
+              🚀 Iniciar
+            </Button>
+          )}
+          
+          <a 
+            href={`/repos/${project.name}`} 
+            target="_blank" 
+            rel="noreferrer"
+            className="btn btn-outline-secondary btn-sm ms-2"
+          >
+            📂 Ver Archivos
+          </a>
+        </div>
+      </Card.Body>
+    </Card>
+  )
 }
 
-export default ProjectCard;
+export default ProjectCard
